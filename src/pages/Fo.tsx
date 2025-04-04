@@ -8,6 +8,7 @@ export function Fo() {
     const [numero, setNumero] = useState<number>(0);
     const [tipofo, SetTipoFo] = useState<string>('');
     const [datafo, SetDataFO] = useState<string>('');
+    const [conteudofo, setConteudoFO] = useState<string>('');
     const [atiradorSelecionado, setAtiradorSelecionado] = useState<any | null>(null);
 
     const numberOptions = Array.from({ length: 101 }, (_, i) => ({
@@ -27,7 +28,6 @@ export function Fo() {
             });
     }, []);
 
-    // Buscar o atirador pelo número quando o número for alterado
     useEffect(() => {
         const atirador = atiradores.find((atirador) => atirador.numero === numero.toString().padStart(3, '0'));
         setAtiradorSelecionado(atirador || null);
@@ -50,7 +50,8 @@ export function Fo() {
             numero: numero.toString().padStart(3, '0'),
             tipofo,
             nomeguerra: atiradorSelecionado?.nomeguerra,
-            datafo
+            datafo,
+
         });
         window.alert('Usuario Criado com Sucesso');
     };
@@ -95,8 +96,9 @@ export function Fo() {
                         </div>
                         <input
                             type="text"
+                            placeholder="Preencha com o fato observado"
                             className="w-full text-sm bg-white p-2 rounded-sm border-1 border-zinc-300 outline-none"
-                            onChange={(e) => SetDataFO(e.target.value)}
+                            onChange={(e) => setConteudoFO(e.target.value)}
                         />
                     </form>
                     <button

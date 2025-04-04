@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Home } from "./pages/Home"
 import { Cadastro } from "./pages/Cadastro"
 import { Fo } from "./pages/Fo"
+import { ListaAtiradores } from "./pages/ListaAtiradores"
+import { FoID } from "./pages/FoID"
 
 function App() {
   return (
@@ -10,6 +12,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/fo" element={<Fo />} />
+        <Route path="/fo/:numero" element={<FoID />} />
+        <Route path="/lista-atiradores" element={<ListaAtiradores />} />
       </Routes>
     </BrowserRouter>
   )

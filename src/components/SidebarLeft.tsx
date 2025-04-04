@@ -17,19 +17,14 @@ const items = [{
     path: '/fo' 
 },
 {
-    nome: "Declaração",
-    icon: FileText,
-    path: '/declaracao' 
-},
-{
-    nome: "Lista Atiradores",
+    nome: "Lista Atr.",
     icon: List,
     path: '/lista-atiradores' 
 },
 {
-    nome: "Buscar Atr.",
-    icon: Search,
-    path: '/busca' 
+    nome: "Declaração",
+    icon: FileText,
+    path: '/declaracao' 
 },
 
 ]

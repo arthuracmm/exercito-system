@@ -3,11 +3,6 @@ import { Eye, FileText, House, List, PlusCircle, Search } from "lucide-react";
 import { SidebarLeft } from "../components/SidebarLeft";
 
 const items = [{
-    nome: "Pagina Principal",
-    icon: House,
-    path: '/'
-},
-{
     nome: "Cadastrar Atirador",
     icon: PlusCircle,
     path: '/cadastro'
@@ -18,20 +13,15 @@ const items = [{
     path: '/fo' 
 },
 {
-    nome: "Declaração",
-    icon: FileText,
-    path: '/declaracao' 
-},
-{
     nome: "Lista Atiradores",
     icon: List,
     path: '/lista-atiradores' 
 },
 {
-    nome: "Buscar Atirador",
-    icon: Search,
-    path: '/busca' 
-}
+    nome: "Declaração",
+    icon: FileText,
+    path: '/declaracao' 
+},
 
 ]
 

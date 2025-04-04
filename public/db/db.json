@@ -1,13 +1,6 @@
 {
   "atiradores": [
     {
-      "datanasc": "2005-12-13",
-      "nomeatr": "a",
-      "nomeguerra": "a",
-      "numero": "025",
-      "id": "7727"
-    },
-    {
       "id": "9704",
       "numero": "001",
       "nomeatr": "Arthur Cesar Sousa Marcelino",
@@ -38,19 +31,20 @@
   ],
   "fo": [
     {
-      "numero": "025",
+      "numero": "001",
       "nomeguerra": "Arthur",
-      "tipofo": "Negativo",
-      "fo": "Cabelo grande e barba a fazer",
-      "data": "2025-04-02",
+      "tipofo": "FO Negativo",
+      "conteudofo": "Cabelo grande e barba a fazer",
+      "datafo": "2025-04-02",
       "id": "2072"
     },
     {
-      "id": "2664",
-      "numero": "020",
+      "numero": "001",
+      "nomeguerra": "Arthur",
       "tipofo": "FO Positivo",
-      "nomeguerra": "Salgado",
-      "datafo": "Ficou ate mais tarde e ajudou na instrução"
+      "conteudofo": "Voluntario a ajudar os outros a organizarem os armarios do alojamento",
+      "datafo": "2025-04-02",
+      "id": "2072"
     }
   ]
 }
