@@ -1,0 +1,56 @@
+{
+  "atiradores": [
+    {
+      "datanasc": "2005-12-13",
+      "nomeatr": "a",
+      "nomeguerra": "a",
+      "numero": "025",
+      "id": "7727"
+    },
+    {
+      "id": "9704",
+      "numero": "001",
+      "nomeatr": "Arthur Cesar Sousa Marcelino",
+      "nomeguerra": "Arthur",
+      "datanasc": "2006-02-15"
+    },
+    {
+      "id": "152f",
+      "numero": "002",
+      "nomeatr": "Sinicio",
+      "nomeguerra": "Sinicio",
+      "datanasc": "2005-02-14"
+    },
+    {
+      "id": "dc04",
+      "numero": "020",
+      "nomeatr": "Giovana Gabriele Bento Salgado",
+      "nomeguerra": "Salgado",
+      "datanasc": "2006-07-11"
+    },
+    {
+      "id": "7f42",
+      "numero": "003",
+      "nomeatr": "Arthur Vieira",
+      "nomeguerra": "Vieira",
+      "datanasc": "2006-10-10"
+    }
+  ],
+  "fo": [
+    {
+      "numero": "025",
+      "nomeguerra": "Arthur",
+      "tipofo": "Negativo",
+      "fo": "Cabelo grande e barba a fazer",
+      "data": "2025-04-02",
+      "id": "2072"
+    },
+    {
+      "id": "2664",
+      "numero": "020",
+      "tipofo": "FO Positivo",
+      "nomeguerra": "Salgado",
+      "datafo": "Ficou ate mais tarde e ajudou na instrução"
+    }
+  ]
+}
