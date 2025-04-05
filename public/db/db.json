@@ -45,6 +45,22 @@
       "conteudofo": "Voluntario a ajudar os outros a organizarem os armarios do alojamento",
       "datafo": "2025-04-02",
       "id": "2072"
+    },
+    {
+      "id": "d32b",
+      "numero": "001",
+      "tipofo": "FO Positivo",
+      "nomeguerra": "Arthur",
+      "datafo": "2025-04-04",
+      "conteudofo": "sem falta"
+    },
+    {
+      "id": "d32b",
+      "numero": "001",
+      "tipofo": "FO Negativo",
+      "nomeguerra": "Arthur",
+      "datafo": "2025-04-04",
+      "conteudofo": "falta"
     }
   ]
 }

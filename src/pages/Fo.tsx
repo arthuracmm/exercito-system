@@ -2,21 +2,25 @@ import { useEffect, useState } from "react";
 import { SidebarLeft } from "../components/SidebarLeft";
 import Select from "react-select";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function Fo() {
     const [atiradores, setAtiradores] = useState<any[]>([]);
     const [numero, setNumero] = useState<number>(0);
     const [tipofo, SetTipoFo] = useState<string>('');
-    const [datafo, SetDataFO] = useState<string>('');
+    const [datafo, SetDataFO] = useState<string>(new Date().toISOString().split('T')[0]);
     const [conteudofo, setConteudoFO] = useState<string>('');
     const [atiradorSelecionado, setAtiradorSelecionado] = useState<any | null>(null);
 
-    const numberOptions = Array.from({ length: 101 }, (_, i) => ({
-        value: i.toString().padStart(3, '0'),
-        label: i.toString().padStart(3, '0'),
-    }));
+    const navigate = useNavigate();
 
-    // Carregar todos os atiradores apenas uma vez
+    const numberOptions = atiradores
+        .sort((a, b) => parseInt(a.numero) - parseInt(b.numero))
+        .map((atirador) => ({
+            value: atirador.numero.toString().padStart(3, '0'),
+            label: atirador.numero.toString().padStart(3, '0'),
+        }));
+
     useEffect(() => {
         axios.get('http://localhost:5000/atiradores')
             .then((response) => {
@@ -51,9 +55,11 @@ export function Fo() {
             tipofo,
             nomeguerra: atiradorSelecionado?.nomeguerra,
             datafo,
+            conteudofo
 
         });
-        window.alert('Usuario Criado com Sucesso');
+        window.alert('Fato Observado Criado com Sucesso');
+        navigate('/fo/' + numero.toString().padStart(3, '0'));
     };
 
     return (
@@ -91,7 +97,7 @@ export function Fo() {
                                 type="date"
                                 className="w-50 text-sm bg-white p-2 rounded-sm border-1 border-zinc-300 outline-none"
                                 onChange={(e) => SetDataFO(e.target.value)}
-                                value={new Date().toISOString().split('T')[0]} 
+                                value={datafo}
                             />
                         </div>
                         <input
