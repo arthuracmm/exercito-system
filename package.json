@@ -11,6 +11,7 @@
     "server": "json-server public/db/db.json --watch --port 5000"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.0",
     "@tailwindcss/vite": "^4.0.17",
     "axios": "^1.8.4",
     "json-server": "^1.0.0-beta.3",
