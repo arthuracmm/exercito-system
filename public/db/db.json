@@ -5,28 +5,700 @@
       "numero": "001",
       "nomeatr": "Arthur Cesar Sousa Marcelino",
       "nomeguerra": "Arthur",
-      "datanasc": "2006-02-15"
+      "datanasc": "2005-01-01"
     },
     {
       "id": "152f",
       "numero": "002",
-      "nomeatr": "Sinicio",
+      "nomeatr": "Arthur Sousa Sinicio Abib",
       "nomeguerra": "Sinicio",
-      "datanasc": "2005-02-14"
-    },
-    {
-      "id": "dc04",
-      "numero": "020",
-      "nomeatr": "Giovana Gabriele Bento Salgado",
-      "nomeguerra": "Salgado",
-      "datanasc": "2006-07-11"
+      "datanasc": "2005-01-01"
     },
     {
       "id": "7f42",
       "numero": "003",
-      "nomeatr": "Arthur Vieira",
+      "nomeatr": "Arthur Vitor Vieira Cintra",
       "nomeguerra": "Vieira",
-      "datanasc": "2006-10-10"
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e32f",
+      "numero": "004",
+      "nomeatr": "Bruno Cintra Rodrigues",
+      "nomeguerra": "Bruno",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "1a3d",
+      "numero": "005",
+      "nomeatr": "Caua Giovanni dos Santos Barcelos",
+      "nomeguerra": "Barcelos",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b91f",
+      "numero": "006",
+      "nomeatr": "Daniel Neves Moreira Sampaio",
+      "nomeguerra": "Sampaio",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "5b42",
+      "numero": "007",
+      "nomeatr": "Daniel Silva Pereira",
+      "nomeguerra": "Daniel",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "6c92",
+      "numero": "008",
+      "nomeatr": "Davi Henrique Ganzaroli",
+      "nomeguerra": "Ganzaroli",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "7d32",
+      "numero": "009",
+      "nomeatr": "Eduardo Henrique Cintra",
+      "nomeguerra": "Eduardo",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "8b92",
+      "numero": "010",
+      "nomeatr": "Egerson Brian Manuel Carneiro",
+      "nomeguerra": "Egerson",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "9a3d",
+      "numero": "011",
+      "nomeatr": "Felipe Gabriel Costa Rodrigues",
+      "nomeguerra": "Costa",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f63a",
+      "numero": "012",
+      "nomeatr": "Felipe Oliveira Ferreira",
+      "nomeguerra": "Felipe",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d42b",
+      "numero": "013",
+      "nomeatr": "Filipe Barbosa Moura",
+      "nomeguerra": "Barbosa",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e83d",
+      "numero": "014",
+      "nomeatr": "Flavio Henrique Thomazelli Toyoshima Sousa",
+      "nomeguerra": "Flavio",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f48e",
+      "numero": "015",
+      "nomeatr": "Gabriel Antonio Ferrarez Oliveira",
+      "nomeguerra": "Ferrarez",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a12d",
+      "numero": "016",
+      "nomeatr": "Gabriel de Freitas",
+      "nomeguerra": "Gabriel",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b74c",
+      "numero": "017",
+      "nomeatr": "Gabriel dos Santos Rossi Soares",
+      "nomeguerra": "Rossi",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c32a",
+      "numero": "018",
+      "nomeatr": "Gabriel Duarte Araujo Lemos Veronez",
+      "nomeguerra": "Veronez",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d64f",
+      "numero": "019",
+      "nomeatr": "Gabriel Messias Soares Santos",
+      "nomeguerra": "Messias",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e16f",
+      "numero": "020",
+      "nomeatr": "Gabriel Ribeiro Araujo",
+      "nomeguerra": "Ribeiro",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a847",
+      "numero": "021",
+      "nomeatr": "Guilherme Donzeli Raimundo",
+      "nomeguerra": "Guilherme",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b92f",
+      "numero": "022",
+      "nomeatr": "Guilherme Ferreira Rodrigues",
+      "nomeguerra": "Ferreira",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "cd12",
+      "numero": "023",
+      "nomeatr": "Guilherme Siqueira Luna",
+      "nomeguerra": "Siqueira",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "ae56",
+      "numero": "024",
+      "nomeatr": "Gustavo Henrique Aguila Borges e Silva",
+      "nomeguerra": "Aguila",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d34f",
+      "numero": "025",
+      "nomeatr": "Gustavo Henrique Rogerio",
+      "nomeguerra": "Henrique",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f12d",
+      "numero": "026",
+      "nomeatr": "Henrique de Sousa Rocha",
+      "nomeguerra": "Rocha",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "g14b",
+      "numero": "027",
+      "nomeatr": "Henrique Eduardo Cruz",
+      "nomeguerra": "Cruz",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c72f",
+      "numero": "028",
+      "nomeatr": "Hugo de Castro Rodrigues",
+      "nomeguerra": "Hugo",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "8d12",
+      "numero": "029",
+      "nomeatr": "Idemar Costa Borja",
+      "nomeguerra": "Idemar",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a4fd",
+      "numero": "030",
+      "nomeatr": "Isaque Carvalho de Araujo",
+      "nomeguerra": "Isaque",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "3d5f",
+      "numero": "031",
+      "nomeatr": "Italo Raony Martins",
+      "nomeguerra": "Italo",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d1d2",
+      "numero": "032",
+      "nomeatr": "Jhonny Peixoto Ferreira",
+      "nomeguerra": "Jhonny",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a3b1",
+      "numero": "033",
+      "nomeatr": "Joao Lucas da Costa Ramos",
+      "nomeguerra": "Costa",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c42b",
+      "numero": "034",
+      "nomeatr": "Joao Luis Pereira",
+      "nomeguerra": "Pereira",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e46f",
+      "numero": "035",
+      "nomeatr": "Joao Paulo Goncalves Querino de Oliveira",
+      "nomeguerra": "Querino",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c29a",
+      "numero": "036",
+      "nomeatr": "Joao Pedro Lara da Silva",
+      "nomeguerra": "Lara",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d82b",
+      "numero": "037",
+      "nomeatr": "Joao Pedro Rocha Pereira",
+      "nomeguerra": "Pedro",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e31d",
+      "numero": "038",
+      "nomeatr": "Joao Victor Gato Pazos",
+      "nomeguerra": "Pazos",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f0a1",
+      "numero": "039",
+      "nomeatr": "Joao Vitor Dias Oliveira",
+      "nomeguerra": "Dias",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "ca33",
+      "numero": "040",
+      "nomeatr": "Joaquim Jose da Silva Souza",
+      "nomeguerra": "Souza",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "cb1a",
+      "numero": "041",
+      "nomeatr": "Jose Eduardo Andre Melo de Sousa",
+      "nomeguerra": "José",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "ab5f",
+      "numero": "042",
+      "nomeatr": "Jose Guilherme de Assis Sousa",
+      "nomeguerra": "Assis",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b8e9",
+      "numero": "043",
+      "nomeatr": "José Ulisses Camilo da Silva",
+      "nomeguerra": "Ulisses",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c7fa",
+      "numero": "044",
+      "nomeatr": "Juan Rodrigues Melo",
+      "nomeguerra": "Juan",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d9b7",
+      "numero": "045",
+      "nomeatr": "Kaike Vieira",
+      "nomeguerra": "Vieira",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e4c5",
+      "numero": "046",
+      "nomeatr": "Kaique Alves de Paula",
+      "nomeguerra": "Kaique",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f912",
+      "numero": "047",
+      "nomeatr": "Kaua Barbosa Inacio",
+      "nomeguerra": "Inácio",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d8bf",
+      "numero": "048",
+      "nomeatr": "Kayky Alexandre Nascimento Silva",
+      "nomeguerra": "Nascimento",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c7ea",
+      "numero": "049",
+      "nomeatr": "Kayky Aurelio de Almeida Borges",
+      "nomeguerra": "Aurelio",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f1be",
+      "numero": "050",
+      "nomeatr": "Leonardo David Solino Bosco",
+      "nomeguerra": "Bosco",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "ed32",
+      "numero": "051",
+      "nomeatr": "Leonardo Mendonca Ferreira",
+      "nomeguerra": "Mendonça",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d8a1",
+      "numero": "052",
+      "nomeatr": "Leonardo Ramiro Pipoli",
+      "nomeguerra": "Ramiro",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c3b9",
+      "numero": "053",
+      "nomeatr": "Luan Henrique Alves Pereira",
+      "nomeguerra": "Alves",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e74f",
+      "numero": "054",
+      "nomeatr": "Lucas Cintra da Costa",
+      "nomeguerra": "Cintra",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b22a",
+      "numero": "055",
+      "nomeatr": "Lucas Vick de Carvalho",
+      "nomeguerra": "Carvalho",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a957",
+      "numero": "056",
+      "nomeatr": "Lucca Masson Silva",
+      "nomeguerra": "Masson",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c41b",
+      "numero": "057",
+      "nomeatr": "Luciano Marcal Junior",
+      "nomeguerra": "Luciano",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f28e",
+      "numero": "058",
+      "nomeatr": "Luis Fernando Mezadri Modesto",
+      "nomeguerra": "Mezadri",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d4e2",
+      "numero": "059",
+      "nomeatr": "Luis Gustavo Oliveira da Silva",
+      "nomeguerra": "Gustavo",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b912",
+      "numero": "060",
+      "nomeatr": "Luiz Felipe Ferreira Silva",
+      "nomeguerra": "Luiz",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a64f",
+      "numero": "061",
+      "nomeatr": "Luiz Guilherme Candido Fernandes",
+      "nomeguerra": "Candido",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c85f",
+      "numero": "062",
+      "nomeatr": "Matheus de Mello Granero Cordeiro",
+      "nomeguerra": "Mello",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a43b",
+      "numero": "063",
+      "nomeatr": "Matheus Gabriel Carrijo",
+      "nomeguerra": "Matheus",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d72a",
+      "numero": "064",
+      "nomeatr": "Matheus Gabriel Sousa Cunha",
+      "nomeguerra": "Cunha",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b4f8",
+      "numero": "065",
+      "nomeatr": "Matheus Henrique Almeida de Oliveira",
+      "nomeguerra": "Oliveira",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c1d9",
+      "numero": "066",
+      "nomeatr": "Matheus Souza Neves",
+      "nomeguerra": "Neves",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e412",
+      "numero": "067",
+      "nomeatr": "Maxsuel Garcia Almeida",
+      "nomeguerra": "Maxsuel",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a7d2",
+      "numero": "068",
+      "nomeatr": "Miguel Henrique Borges Brites",
+      "nomeguerra": "Borges",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d941",
+      "numero": "069",
+      "nomeatr": "Miguel Santos Pereira",
+      "nomeguerra": "Santos",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f92e",
+      "numero": "070",
+      "nomeatr": "Murilo Henrique de Souza Silva",
+      "nomeguerra": "Murilo",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c8b7",
+      "numero": "071",
+      "nomeatr": "Pablo Miguel Sousa Nobrega",
+      "nomeguerra": "Pablo",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "bb6f",
+      "numero": "072",
+      "nomeatr": "Pablo Vinicius Soares Vitor",
+      "nomeguerra": "Vinicius",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a2d3",
+      "numero": "073",
+      "nomeatr": "Patrick Soares Vitor",
+      "nomeguerra": "Patrick",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b58d",
+      "numero": "074",
+      "nomeatr": "Paulo Henrique Moura",
+      "nomeguerra": "Paulo",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c8a1",
+      "numero": "075",
+      "nomeatr": "Pedro Alves Taveira",
+      "nomeguerra": "Taveira",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d5b8",
+      "numero": "076",
+      "nomeatr": "Pedro Henrique Rodrigues",
+      "nomeguerra": "Rodrigues",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b0fc",
+      "numero": "077",
+      "nomeatr": "Pedro Henrique Silva Celestino",
+      "nomeguerra": "Celestino",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "cd78",
+      "numero": "078",
+      "nomeatr": "Pedro Jose de Andrade Neto",
+      "nomeguerra": "Neto",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a7bc",
+      "numero": "079",
+      "nomeatr": "Pedro Miguel Barbosa Oliveira",
+      "nomeguerra": "Miguel",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b928",
+      "numero": "080",
+      "nomeatr": "Plinio Cintra Campos",
+      "nomeguerra": "Plinio",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e57b",
+      "numero": "081",
+      "nomeatr": "Rafael Campos Barbosa",
+      "nomeguerra": "Rafael",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f2f6",
+      "numero": "082",
+      "nomeatr": "Rafael Torralbo Machado",
+      "nomeguerra": "Machado",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c00e",
+      "numero": "083",
+      "nomeatr": "Raiky Carlos da Silva",
+      "nomeguerra": "Raiky",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e22b",
+      "numero": "084",
+      "nomeatr": "Samuel Rodrigues Ferreira",
+      "nomeguerra": "Samuel",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d378",
+      "numero": "085",
+      "nomeatr": "Thiago Canasio Amorim",
+      "nomeguerra": "Canasio",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "b07f",
+      "numero": "086",
+      "nomeatr": "Victor Campos Gouveia da Silva",
+      "nomeguerra": "Gouveia",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "bb3c",
+      "numero": "087",
+      "nomeatr": "Victor Carrijo Xavier",
+      "nomeguerra": "Carrijo",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a493",
+      "numero": "088",
+      "nomeatr": "Victor Hugo Bichaco Ferreira",
+      "nomeguerra": "Bichaco",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c5ba",
+      "numero": "089",
+      "nomeatr": "Victor Hugo Macarini Lima",
+      "nomeguerra": "Macarini",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d72e",
+      "numero": "090",
+      "nomeatr": "Vinicius Gomes de Souza",
+      "nomeguerra": "Gomes",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e4c9",
+      "numero": "091",
+      "nomeatr": "Vinicius Wolffe Cardozo",
+      "nomeguerra": "Wolffe",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "ba39",
+      "numero": "092",
+      "nomeatr": "Vitor Hugo Baldoino",
+      "nomeguerra": "Baldoino",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d912",
+      "numero": "093",
+      "nomeatr": "Vitor Siqueira Simeao",
+      "nomeguerra": "Simeão",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "cb73",
+      "numero": "094",
+      "nomeatr": "Vitor Vick de Carvalho",
+      "nomeguerra": "Vick",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "a87f",
+      "numero": "095",
+      "nomeatr": "Wendel Antony Rodrigues da Silva",
+      "nomeguerra": "Antony",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "d314",
+      "numero": "096",
+      "nomeatr": "Wender Henryque Floro Silva",
+      "nomeguerra": "Wender",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "bc61",
+      "numero": "097",
+      "nomeatr": "Wesley Kevin Ferraresi",
+      "nomeguerra": "Kevin",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "c3d9",
+      "numero": "098",
+      "nomeatr": "Willian Oliveira Pires",
+      "nomeguerra": "Willian",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "f812",
+      "numero": "099",
+      "nomeatr": "Wlisses Aparecido de Faria Silva",
+      "nomeguerra": "Faria",
+      "datanasc": "2005-01-01"
+    },
+    {
+      "id": "e2ba",
+      "numero": "100",
+      "nomeatr": "Yago Henrique Carrijo Carlos",
+      "nomeguerra": "Yago",
+      "datanasc": "2005-01-01"
     }
   ],
   "fo": [
@@ -61,6 +733,30 @@
       "nomeguerra": "Arthur",
       "datafo": "2025-04-04",
       "conteudofo": "falta"
+    },
+    {
+      "id": "d32b",
+      "numero": "001",
+      "tipofo": "FO Positivo",
+      "nomeguerra": "Arthur",
+      "datafo": "2025-04-04",
+      "conteudofo": "sem falta"
+    },
+    {
+      "id": "d32b",
+      "numero": "001",
+      "tipofo": "FO Negativo",
+      "nomeguerra": "Arthur",
+      "datafo": "2025-04-04",
+      "conteudofo": "falta"
+    },
+    {
+      "id": "c251",
+      "numero": "002",
+      "tipofo": "FO Negativo",
+      "nomeguerra": "Sinicio",
+      "datafo": "2025-04-06",
+      "conteudofo": "cabelo grande"
     }
   ]
 }
