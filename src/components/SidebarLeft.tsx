@@ -1,4 +1,4 @@
-import { Eye, FileText, House, List, PlusCircle, Search } from "lucide-react";
+import { FileText, House, List, PlusCircle, Search, UserRoundX } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const items = [{
@@ -12,11 +12,6 @@ const items = [{
     path: '/cadastro'
 },
 {
-    nome: "Fato Observado",
-    icon: Eye,
-    path: '/fo' 
-},
-{
     nome: "Lista Atr.",
     icon: List,
     path: '/lista-atiradores' 
@@ -25,6 +20,11 @@ const items = [{
     nome: "Declaração",
     icon: FileText,
     path: '/declaracao' 
+},
+{
+    nome: "Faltas",
+    icon: UserRoundX,
+    path: '/faltas' 
 },
 
 ]

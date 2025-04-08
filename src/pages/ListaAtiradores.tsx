@@ -49,7 +49,7 @@ export function ListaAtiradores() {
                                     <h2 className="text-lg">Nome: <span className="font-bold">{atirador.nomeguerra}</span></h2>
                                 </div>
                                 <div>
-                                    <Link to={`/fo/${atirador.numero}`} className="text-blue-500 hover:text-blue-700">
+                                    <Link to={`/atirador/${atirador.id}`} className="text-blue-500 hover:text-blue-700">
                                         Ver Detalhes
                                     </Link>
                                 </div>
