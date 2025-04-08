@@ -1,20 +1,40 @@
 import { useEffect, useState } from "react";
-import { SidebarLeft } from "../components/SidebarLeft";
 import axios from "axios";
+import { SidebarLeft } from "../components/SidebarLeft";
 import { Link } from "react-router-dom";
 
 export function Faltas() {
     const [atiradores, setAtiradores] = useState<any[]>([]);
-    const [selectedFaltas, setSelectedFaltas] = useState<{ [key: string]: string[] }>({}); // Para armazenar as faltas selecionadas
+    const [faltas, setFaltas] = useState<{ [key: string]: string[] }>({});
+    const [selectedAtiradores, setSelectedAtiradores] = useState<{ [key: string]: Set<string> }>({});
 
     useEffect(() => {
         axios.get('http://localhost:5000/atiradores')
             .then((response) => {
-                console.log('Dados retornados:', response.data);
                 setAtiradores(response.data);
             })
             .catch((error) => {
                 console.error('Erro ao carregar atiradores:', error);
+            });
+
+        axios.get('http://localhost:5000/faltas')
+            .then((response) => {
+                const faltasData: { [key: string]: string[] } = {};
+                const selectedAtiradoresData: { [key: string]: Set<string> } = {};
+
+                response.data.forEach((falta: any) => {
+                    const data = falta.data;
+                    const atiradores = falta.atiradores;
+
+                    faltasData[data] = atiradores;
+                    selectedAtiradoresData[data] = new Set(atiradores); 
+                });
+
+                setFaltas(faltasData);
+                setSelectedAtiradores(selectedAtiradoresData);
+            })
+            .catch((error) => {
+                console.error('Erro ao carregar faltas:', error);
             });
     }, []);
 
@@ -41,46 +61,105 @@ export function Faltas() {
 
     const weekDays = getWeekDays();
 
-    const handleCheckboxChange = (atiradorId: string, date: string, isChecked: boolean) => {
-        setSelectedFaltas((prevSelected) => {
-            const newSelected = { ...prevSelected };
-            if (isChecked) {
-                if (!newSelected[date]) newSelected[date] = [];
-                newSelected[date].push(atiradorId);
-            } else {
-                newSelected[date] = newSelected[date].filter((id: string) => id !== atiradorId);
-                if (newSelected[date].length === 0) delete newSelected[date];
+    const handleCheckboxChange = (date: string, atiradorId: string, checked: boolean) => {
+        setSelectedAtiradores((prevSelected) => {
+            const updatedSelected = { ...prevSelected };
+            if (!updatedSelected[date]) {
+                updatedSelected[date] = new Set();
             }
-            return newSelected;
+
+            if (checked) {
+                updatedSelected[date].add(atiradorId); 
+            } else {
+                updatedSelected[date].delete(atiradorId);
+            }
+
+            return updatedSelected;
         });
     };
 
-    const handleUpdateFaltas = () => {
-        axios.post('http://localhost:5000/faltas', selectedFaltas)
-            .then((response) => {
-                console.log('Faltas atualizadas com sucesso:', response.data);
-            })
-            .catch((error) => {
-                console.error('Erro ao atualizar faltas:', error);
-            });
+    const handleSubmit = () => {
+        weekDays.forEach((weekDay) => {
+            const date = weekDay.date;
+            const atiradoresForDay = Array.from(selectedAtiradores[date] || []);
+
+            const dataToSend = {
+                data: date,
+                atiradores: atiradoresForDay
+            };
+
+            console.log('Tentando atualizar falta para a data:', date);
+            console.log('Dados a serem enviados:', dataToSend);
+
+            if (faltas[date]) {
+                axios.put(`http://localhost:5000/faltas/${date}`, dataToSend)
+                    .then((_response) => {
+                        console.log(`Faltas para ${date} atualizadas com sucesso`);
+                    })
+                    .catch((error) => {
+                        console.error(`Erro ao atualizar faltas para ${date}:`, error.response ? error.response.data : error.message);
+                        if (error.response && error.response.status === 404) {
+                            axios.post('http://localhost:5000/faltas', dataToSend)
+                                .then(() => {
+                                    console.log(`Faltas para ${date} criadas com sucesso`);
+                                })
+                                .catch((createError) => {
+                                    console.error(`Erro ao criar faltas para ${date}:`, createError.response ? createError.response.data : createError.message);
+                                });
+                        }
+                    });
+            } else {
+                axios.post('http://localhost:5000/faltas', dataToSend)
+                    .then((_response) => {
+                        console.log(`Faltas para ${date} criadas com sucesso`);
+                    })
+                    .catch((error) => {
+                        console.error(`Erro ao criar faltas para ${date}:`, error.response ? error.response.data : error.message);
+                    });
+            }
+        });
     };
+
+    const handleReset = () => {
+        if (window.confirm("Você tem certeza de que deseja redefinir todas as faltas? Isso removerá todas as faltas do banco de dados.")) {
+            axios.delete('http://localhost:5000/faltas')
+                .then(() => {
+                    console.log("Todas as faltas foram apagadas com sucesso");
+                    setFaltas({});
+                    setSelectedAtiradores({});
+                })
+                .catch((error) => {
+                    console.error("Erro ao apagar todas as faltas:", error.response ? error.response.data : error.message);
+                });
+        }
+    };
+    
 
     return (
         <div className="flex flex-1 h-screen w-full font-josefin">
             <SidebarLeft />
-            <div className="flex flex-col flex-1 ml-50 bg-zinc-200 overflow-hidden py-6 px-8 gap-1">
+            <div className="flex flex-col flex-1 ml-50 bg-zinc-200 overflow-hidden py-6 px-8 gap-1 items-center">
                 <div className="flex w-full justify-between">
                     <h1 className="font-bold text-2xl">Consultar Faltas <span className="block text-sm font-medium">Semana Atual</span></h1>
                     <Link to="/faltas/semana-passada" className="text-blue-500 hover:text-blue-700">
                         Ver Semana Passada
                     </Link>
                 </div>
-                <div className="w-[10%] h-0.5 rounded-lg bg-green-500" />
+                <div className="flex w-full">
+                    <div className="w-[10%] h-0.5 rounded-lg bg-green-500" />
+                </div>
+                <button
+                    className="bg-red-500 text-xs p-2 text-white rounded-lg hover:bg-red-600 transition-all w-fit cursor-pointer mt-2"
+                    onClick={handleReset}
+                >
+                    Redefinir Faltas
+                </button>
+
                 <div className="flex flex-1 flex-col w-full mt-2 overflow-x-hidden overflow-y-scroll items-center">
                     {atiradores
                         .sort((a, b) => parseInt(a.numero) - parseInt(b.numero))
                         .map((atirador) => (
-                            <div key={atirador.nomeguerra} className="flex flex-1 gap-4 bg-white rounded-lg p-4 m-2 w-[99%]">
+                            <div key={atirador.id} className="flex flex-1 gap-4 bg-white rounded-lg p-4 m-2 w-[99%]">
                                 <div className="flex flex-1 gap-4">
                                     <div className="flex justify-between items-center w-40">
                                         <h2 className="text-sm uppercase font-bold">{atirador.numero}</h2>
@@ -93,9 +172,12 @@ export function Faltas() {
                                                 <span className="text-[15px] font-semibold">{weekDay.date}</span>
                                                 <input
                                                     type="checkbox"
-                                                    name={weekDay.day}
-                                                    id={weekDay.day}
-                                                    onChange={(e) => handleCheckboxChange(atirador.id, weekDay.date, e.target.checked)} // Adiciona o evento de mudança
+                                                    name={weekDay.date}
+                                                    id={`${atirador.id}-${weekDay.date}`}
+                                                    checked={selectedAtiradores[weekDay.date]?.has(atirador.id) || false}
+                                                    onChange={(e) =>
+                                                        handleCheckboxChange(weekDay.date, atirador.id, e.target.checked)
+                                                    }
                                                 />
                                             </div>
                                         ))}
@@ -103,9 +185,9 @@ export function Faltas() {
                                 </div>
                             </div>
                         ))}
-                    <button 
-                        onClick={handleUpdateFaltas} 
+                    <button
                         className="bg-green-500 p-2 text-white rounded-lg hover:bg-green-600 transition-all w-[20%] cursor-pointer"
+                        onClick={handleSubmit}
                     >
                         Atualizar Faltas
                     </button>
