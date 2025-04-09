@@ -10,36 +10,37 @@ export function FaltasSP() {
     const [selectedAtiradores, setSelectedAtiradores] = useState<{ [key: string]: Set<string> }>({});
     const [activeDates, setActiveDates] = useState<{ [key: string]: boolean }>({});
     const [weekDays, setWeekDays] = useState<any[]>([]);
+    const [hourDates, setHourDates] = useState<{ [key: string]: string }>({});
 
-    // Função para obter os dias da semana atual
-    const getWeekDays = () => {
+    // Função para obter os dias da semana passada
+    const getLastWeekDays = () => {
         const daysOfWeek = ['SEGUNDA FEIRA', 'TERÇA FEIRA', 'QUARTA FEIRA', 'QUINTA FEIRA', 'SEXTA FEIRA', 'SABADO'];
         const today = new Date();
         const dayOfWeek = today.getDay();
-    
-        // Calcula a diferença para a segunda-feira da semana passada
-        const diffToLastMonday = dayOfWeek === 0 ? -13 : -6 - dayOfWeek;
+
+        const diffToLastMonday = dayOfWeek === 0 ? -13 : 1 - dayOfWeek - 7;
         const lastMonday = new Date(today);
         lastMonday.setDate(today.getDate() + diffToLastMonday);
-    
+
         const weekDates = [];
-    
+
         for (let i = 0; i < 6; i++) {
             const day = new Date(lastMonday);
             day.setDate(lastMonday.getDate() + i);
-    
+
             const year = day.getFullYear();
             const month = String(day.getMonth() + 1).padStart(2, '0');
             const date = String(day.getDate()).padStart(2, '0');
-    
+
             const isoDate = `${year}-${month}-${date}`;
             weekDates.push({ day: daysOfWeek[i], date: isoDate });
         }
-    
+
         setWeekDays(weekDates);
     };
 
     useEffect(() => {
+        // Pega os atiradores
         axios.get('http://localhost:5000/atiradores')
             .then((response) => {
                 setAtiradores(response.data);
@@ -48,11 +49,13 @@ export function FaltasSP() {
                 console.error('Erro ao carregar atiradores:', error);
             });
 
+        // Pega as faltas da semana passada
         axios.get('http://localhost:5000/faltas')
             .then((response) => {
                 const faltasData: { [key: string]: any } = {};
                 const selectedAtiradoresData: { [key: string]: Set<string> } = {};
                 const activeDatesData: { [key: string]: boolean } = {};
+                const hourDatesData: { [key: string]: string } = {};
 
                 response.data.forEach((falta: any) => {
                     const data = falta.data;
@@ -60,19 +63,21 @@ export function FaltasSP() {
 
                     faltasData[data] = falta;
                     selectedAtiradoresData[data] = new Set(atiradores);
-                    activeDatesData[data] = falta.ativo !== undefined ? falta.ativo : true; // Default ativo
+                    activeDatesData[data] = falta.ativo !== undefined ? falta.ativo : true;
+                    hourDatesData[data] = falta.hora || '';
                 });
 
                 setFaltas(faltasData);
                 setSelectedAtiradores(selectedAtiradoresData);
                 setActiveDates(activeDatesData);
+                setHourDates(hourDatesData);
             })
             .catch((error) => {
                 console.error('Erro ao carregar faltas:', error);
             });
 
-        // Chama a função para gerar os dias da semana
-        getWeekDays();
+        // Chama a função para gerar os dias da semana passada
+        getLastWeekDays();
     }, []);
 
     const formatDateForDisplay = (isoDate: string) => {
@@ -106,15 +111,25 @@ export function FaltasSP() {
         });
     };
 
+    const handleHourChange = (date: string, hour: string) => {
+        setHourDates((prevState) => {
+            const newState = { ...prevState };
+            newState[date] = hour;
+            return newState;
+        });
+    };
+
     const handleSubmit = () => {
         // Envia as alterações ao banco de dados apenas quando o botão for clicado
         Object.keys(activeDates).forEach((date) => {
             const atiradoresForDay = Array.from(selectedAtiradores[date] || []);
+            const hora = hourDates[date] || '';
             const dataToSend = {
                 id: date,
                 data: date,
                 atiradores: atiradoresForDay,
-                ativo: activeDates[date], // Mantém o status ativo da data
+                ativo: activeDates[date],
+                hora: hora,
             };
 
             // Verifica se a data já existe no banco de dados
@@ -161,7 +176,8 @@ export function FaltasSP() {
                         id: date,
                         data: date,
                         atiradores: Array.from(selectedAtiradores[date] || []).filter((id) => id !== atiradorId),
-                        ativo: activeDates[date], // Mantém o status ativo da data
+                        ativo: activeDates[date],
+                        hora: hourDates[date] || '',
                     })
                         .then(() => {
                             console.log(`Atirador ${atiradorId} removido da data ${date} com sucesso`);
@@ -191,13 +207,22 @@ export function FaltasSP() {
                 <div className="flex flex-1 flex-col w-full mt-2 overflow-x-hidden overflow-y-scroll items-center pr-2">
                     <div className="flex justify-between w-full">
                         {weekDays.map((weekDay) => (
-                            <button
-                                key={weekDay.date}
-                                className={`px-4 py-2 rounded-lg ${activeDates[weekDay.date] ? 'bg-red-300' : 'bg-green-300'}`}
-                                onClick={() => handleDateStatusChange(weekDay.date)}
-                            >
-                                {activeDates[weekDay.date] ? 'Desativar' : 'Ativar'} {weekDay.day}
-                            </button>
+                            <div className="flex flex-col gap-1">
+                                <button
+                                    key={weekDay.date}
+                                    className={`text-xs px-4 py-2 rounded-lg ${activeDates[weekDay.date] ? 'bg-red-300' : 'bg-green-300'}`}
+                                    onClick={() => handleDateStatusChange(weekDay.date)}
+                                >
+                                    {activeDates[weekDay.date] ? 'Desativar' : 'Ativar'} {weekDay.day}
+                                </button>
+                                <input
+                                    type="text"
+                                    placeholder={`Hora ${formatDateForDisplay(weekDay.date)}`}
+                                    className="w-50 text-sm bg-white p-2 rounded-sm border-1 border-zinc-300 outline-none"
+                                    onChange={(e) => handleHourChange(weekDay.date, e.target.value)}
+                                    value={hourDates[weekDay.date] || ''}
+                                />
+                            </div>
                         ))}
                     </div>
 
@@ -235,12 +260,19 @@ export function FaltasSP() {
                                     className="flex size-10 bg-red-500 items-center justify-center rounded-lg cursor-pointer"
                                     onClick={() => handleRemoveAtirador(atirador.id)}
                                 >
-                                    <Eraser className="text-white" />
+                                    <Eraser size={20} />
                                 </button>
                             </div>
                         ))}
+                    <div className="flex gap-4 w-full justify-center items-center py-6">
+                        <button
+                            className="flex justify-center items-center text-white bg-zinc-900 p-2 rounded-lg gap-2"
+                            onClick={handleSubmit}
+                        >
+                            <h1>Salvar Alterações</h1>
+                        </button>
+                    </div>
                 </div>
-
                 <button
                     className="bg-green-500 p-2 text-white rounded-lg hover:bg-green-600 transition-all w-[20%] cursor-pointer"
                     onClick={handleSubmit}

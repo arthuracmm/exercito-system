@@ -9,6 +9,7 @@ export function Declaracao() {
     const [faltas, setFaltas] = useState<any[]>([]);
     const [semanaSelecionada, setSemanaSelecionada] = useState<string>('current'); // "current" ou "previous"
     const [diasDaSemana, setDiasDaSemana] = useState<any[]>([]);
+    const [hourDates, setHourDates] = useState<any>({}); // Armazenar as horas para cada dia
 
     // Função para gerar as datas de segunda a sábado
     const obterDiasDaSemana = (data: Date) => {
@@ -56,13 +57,22 @@ export function Declaracao() {
             .catch((error) => {
                 console.error('Erro ao carregar faltas:', error);
             });
+
+        // Carregar as horas (isso pode variar dependendo de como você tem a estrutura de dados)
+        axios.get('http://localhost:5000/hours')
+            .then((response) => {
+                setHourDates(response.data); // Aqui você pode ter um objeto com as horas
+            })
+            .catch((error) => {
+                console.error('Erro ao carregar horas:', error);
+            });
     }, []);
 
     useEffect(() => {
         // Gerar os dias da semana com base na data atual ou semana passada
         const hoje = new Date();
-        const dias = semanaSelecionada === 'current' 
-            ? obterDiasDaSemana(hoje) 
+        const dias = semanaSelecionada === 'current'
+            ? obterDiasDaSemana(hoje)
             : ajustarParaSemanaPassada(hoje);
         setDiasDaSemana(dias);
     }, [semanaSelecionada]);
@@ -79,52 +89,62 @@ export function Declaracao() {
 
     const gerarPDFs = () => {
         const doc = new jsPDF();
-    
+      
         // Verificar se algum atirador foi selecionado
         if (selectedAtiradores.length === 0) {
             alert("Nenhum atirador selecionado!");
             return;
         }
-    
+      
         // Iterar sobre os atiradores selecionados
         selectedAtiradores.forEach((id, index) => {
             const atirador = atiradores.find(a => a.id === id); // Comparar pelo id
             if (atirador) {
                 let yPosition = 30;
-                let hasPresenceInAnyDay = false; // Flag para verificar se o atirador tem presença em qualquer dia
-    
+                let textoFaltas = ""; // String para acumular as faltas (data + hora)
+        
                 // Adicionar o nome do atirador
                 if (index > 0) doc.addPage(); // Nova página após a primeira
                 doc.text(`Atirador: ${atirador.nomeatr}`, 20, yPosition);
                 yPosition += 10; // Ajustar a posição
-    
+        
                 // Iterar sobre os dias da semana (segunda a sábado)
                 diasDaSemana.forEach((dia) => {
-                    // Verificar se o atirador tem falta nesse dia específico
+                    // Verificar se o atirador faltou nesse dia específico
                     const faltaNoDia = faltas.find(falta => 
                         falta.atiradores.includes(atirador.id) && falta.data === dia.data);
-    
-                    // Se não tiver falta no dia, mostrar a data e a hora
-                    if (!faltaNoDia) {
-                        const hora = faltaNoDia?.hora || "Sem horário"; // Pega o horário ou exibe "Sem horário"
-                        doc.text(`(${dia.dataFormatada}, ${hora})`, 20, yPosition); // Mostrar no formato "(data, hora)"
-                        yPosition += 10; // Ajustar a posição
-                        hasPresenceInAnyDay = true;
+            
+                    // Se o atirador faltar, mostrar a data e a hora
+                    if (faltaNoDia) {
+                        const hora = faltaNoDia.hora || ""; // Pega o horário ou deixa vazio
+                        if (hora) {
+                            textoFaltas += `${dia.dataFormatada} ${hora}, `; // Concatenar a data e hora com vírgula
+                        } else {
+                            textoFaltas += `${dia.dataFormatada}, `; // Apenas a data, sem a hora
+                        }
+                    } else {
+                        // Se o atirador NÃO faltou, adicionar a data sem hora
+                        textoFaltas += `${dia.dataFormatada}, `;
                     }
                 });
-    
-                // Se o atirador não tiver presença em nenhum dia, não gerar a declaração
-                if (!hasPresenceInAnyDay) {
-                    console.log(`Atirador ${atirador.nomeatr} não tem presença em nenhum dia`);
-                    return;
+        
+                // Remover a última vírgula e espaço extras (se houver)
+                if (textoFaltas.endsWith(", ")) {
+                    textoFaltas = textoFaltas.slice(0, -2);
                 }
+        
+                // Exibir o texto das faltas acumuladas
+                doc.text(textoFaltas, 20, yPosition);
+                yPosition += 10; // Ajustar a posição vertical
             }
         });
-    
+      
         // Exibir o PDF gerado
         doc.output('dataurlnewwindow');
     };
-
+    
+    
+    
     return (
         <div className="flex flex-1 h-screen w-full font-josefin">
             <SidebarLeft />

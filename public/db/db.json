@@ -765,60 +765,52 @@
       "data": "2025-04-07",
       "atiradores": [
         "9704",
-        "7f42",
-        "1a3d"
+        "152f"
       ],
       "ativo": true,
-      "hora": "Das 06:00 as 08:00"
-    },
-    {
-      "id": "2025-04-12",
-      "data": "2025-04-12",
-      "atiradores": [
-        "9704"
-      ],
-      "ativo": true,
-      "hora": "Das 06:00 as 08:10"
+      "hora": ""
     },
     {
       "id": "2025-04-08",
       "data": "2025-04-08",
       "atiradores": [
-        "152f",
-        "e32f"
+        "7f42"
       ],
       "ativo": true,
       "hora": "Das 06:00 as 08:30"
     },
     {
+      "id": "2025-04-09",
+      "data": "2025-04-09",
+      "atiradores": [],
+      "ativo": true,
+      "hora": ""
+    },
+    {
       "id": "2025-04-10",
       "data": "2025-04-10",
-      "atiradores": [
-        "152f",
-        "1a3d"
-      ],
+      "atiradores": [],
       "ativo": true,
-      "hora": "Das 06:00 as 08:30"
+      "hora": ""
     },
     {
       "id": "2025-04-11",
       "data": "2025-04-11",
       "atiradores": [
-        "9704",
-        "7f42",
-        "1a3d"
-      ],
-      "ativo": true,
-      "hora": "Das 06:00 as 08:20"
-    },
-    {
-      "id": "2025-04-09",
-      "data": "2025-04-09",
-      "atiradores": [
         "e32f"
       ],
       "ativo": true,
-      "hora": "Das 06:00 as 08:10"
+      "hora": "Das 06:00 as 08:30"
+    },
+    {
+      "id": "2025-04-12",
+      "data": "2025-04-12",
+      "atiradores": [
+        "e32f",
+        "9704"
+      ],
+      "ativo": true,
+      "hora": ""
     }
   ]
 }

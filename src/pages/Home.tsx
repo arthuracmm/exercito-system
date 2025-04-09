@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Eye, FileText, House, List, PlusCircle, Search } from "lucide-react";
+import { Eye, FileText, House, List, PlusCircle, Search, UserRoundX } from "lucide-react";
 import { SidebarLeft } from "../components/SidebarLeft";
 import { Footer } from "../components/Footer";
 
@@ -7,11 +7,6 @@ const items = [{
     nome: "Cadastrar Atirador",
     icon: PlusCircle,
     path: '/cadastro'
-},
-{
-    nome: "Fato Observado",
-    icon: Eye,
-    path: '/fo'
 },
 {
     nome: "Lista Atiradores",
@@ -23,6 +18,11 @@ const items = [{
     icon: FileText,
     path: '/declaracao'
 },
+{
+    nome: "Faltas",
+    icon: UserRoundX,
+    path: '/faltas' 
+}
 
 ]
 

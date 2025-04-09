@@ -1,4 +1,4 @@
-import { FileText, House, List, PlusCircle, Search, UserRoundX } from "lucide-react";
+import { FileText, House, List, PlusCircle, UserRoundX } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const items = [{
@@ -25,8 +25,7 @@ const items = [{
     nome: "Faltas",
     icon: UserRoundX,
     path: '/faltas' 
-},
-
+}
 ]
 
 const verifyPath = (path: string) => {
