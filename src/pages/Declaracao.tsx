@@ -6,7 +6,6 @@ import { jsPDF } from "jspdf";
 export function Declaracao() {
     const [atiradores, setAtiradores] = useState<any[]>([]);
     const [selectedAtiradores, setSelectedAtiradores] = useState<string[]>([]);
-    const [dataHora, setDataHora] = useState<string>('');
     const [faltas, setFaltas] = useState<any[]>([]);
     const [semanaSelecionada, setSemanaSelecionada] = useState<string>('current'); // "current" ou "previous"
     const [diasDaSemana, setDiasDaSemana] = useState<any[]>([]);
@@ -68,10 +67,6 @@ export function Declaracao() {
         setDiasDaSemana(dias);
     }, [semanaSelecionada]);
 
-    const handleDataHoraChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDataHora(e.target.value);
-    };
-
     const handleCheckboxChange = (id: string) => {
         setSelectedAtiradores((prevSelected) => {
             if (prevSelected.includes(id)) {
@@ -84,50 +79,48 @@ export function Declaracao() {
 
     const gerarPDFs = () => {
         const doc = new jsPDF();
-
+    
         // Verificar se algum atirador foi selecionado
         if (selectedAtiradores.length === 0) {
             alert("Nenhum atirador selecionado!");
             return;
         }
-
+    
         // Iterar sobre os atiradores selecionados
         selectedAtiradores.forEach((id, index) => {
             const atirador = atiradores.find(a => a.id === id); // Comparar pelo id
             if (atirador) {
                 let yPosition = 30;
                 let hasPresenceInAnyDay = false; // Flag para verificar se o atirador tem presença em qualquer dia
-
+    
                 // Adicionar o nome do atirador
                 if (index > 0) doc.addPage(); // Nova página após a primeira
                 doc.text(`Atirador: ${atirador.nomeatr}`, 20, yPosition);
                 yPosition += 10; // Ajustar a posição
-
+    
                 // Iterar sobre os dias da semana (segunda a sábado)
                 diasDaSemana.forEach((dia) => {
                     // Verificar se o atirador tem falta nesse dia específico
-                    const faltaNoDia = faltas.some(falta => 
+                    const faltaNoDia = faltas.find(falta => 
                         falta.atiradores.includes(atirador.id) && falta.data === dia.data);
-
-                    // Se não tiver falta no dia, mostrar a data
+    
+                    // Se não tiver falta no dia, mostrar a data e a hora
                     if (!faltaNoDia) {
-                        doc.text(dia.dataFormatada, 20, yPosition); // Mostrar a data formatada "DD/MM"
+                        const hora = faltaNoDia?.hora || "Sem horário"; // Pega o horário ou exibe "Sem horário"
+                        doc.text(`(${dia.dataFormatada}, ${hora})`, 20, yPosition); // Mostrar no formato "(data, hora)"
                         yPosition += 10; // Ajustar a posição
                         hasPresenceInAnyDay = true;
                     }
                 });
-
+    
                 // Se o atirador não tiver presença em nenhum dia, não gerar a declaração
                 if (!hasPresenceInAnyDay) {
                     console.log(`Atirador ${atirador.nomeatr} não tem presença em nenhum dia`);
                     return;
                 }
-
-                // Adicionar a data e hora na parte inferior
-                doc.text(`Data e Hora: ${dataHora}`, 20, yPosition + 10);
             }
         });
-
+    
         // Exibir o PDF gerado
         doc.output('dataurlnewwindow');
     };
@@ -170,14 +163,6 @@ export function Declaracao() {
                             </div>
                         ))}
                 </div>
-
-                <input
-                    type="text"
-                    placeholder="Digite a data e hora"
-                    value={dataHora}
-                    onChange={handleDataHoraChange}
-                    className="bg-white p-2 rounded-sm border-1 border-zinc-300 outline-none w-full"
-                />
                 <button
                     onClick={gerarPDFs}
                     className="mt-4 bg-blue-500 text-white p-2 rounded bottom-4 left-4 w-full"

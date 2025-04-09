@@ -10,6 +10,7 @@ export function Faltas() {
     const [selectedAtiradores, setSelectedAtiradores] = useState<{ [key: string]: Set<string> }>({});
     const [activeDates, setActiveDates] = useState<{ [key: string]: boolean }>({});
     const [weekDays, setWeekDays] = useState<any[]>([]);
+    const [hourDates, setHourDates] = useState<{ [key: string]: string }>({});  // Estado para armazenar a hora para cada data
 
     // Função para obter os dias da semana atual
     const getWeekDays = () => {
@@ -52,6 +53,7 @@ export function Faltas() {
                 const faltasData: { [key: string]: any } = {};
                 const selectedAtiradoresData: { [key: string]: Set<string> } = {};
                 const activeDatesData: { [key: string]: boolean } = {};
+                const hourDatesData: { [key: string]: string } = {}; // Novo estado para armazenar as horas
 
                 response.data.forEach((falta: any) => {
                     const data = falta.data;
@@ -60,11 +62,13 @@ export function Faltas() {
                     faltasData[data] = falta;
                     selectedAtiradoresData[data] = new Set(atiradores);
                     activeDatesData[data] = falta.ativo !== undefined ? falta.ativo : true; // Default ativo
+                    hourDatesData[data] = falta.hora || ''; // Carrega a hora ou define como vazio
                 });
 
                 setFaltas(faltasData);
                 setSelectedAtiradores(selectedAtiradoresData);
                 setActiveDates(activeDatesData);
+                setHourDates(hourDatesData); // Atualiza o estado com as horas
             })
             .catch((error) => {
                 console.error('Erro ao carregar faltas:', error);
@@ -105,15 +109,25 @@ export function Faltas() {
         });
     };
 
+    const handleHourChange = (date: string, hour: string) => {
+        setHourDates((prevState) => {
+            const newState = { ...prevState };
+            newState[date] = hour;
+            return newState;
+        });
+    };
+
     const handleSubmit = () => {
         // Envia as alterações ao banco de dados apenas quando o botão for clicado
         Object.keys(activeDates).forEach((date) => {
             const atiradoresForDay = Array.from(selectedAtiradores[date] || []);
+            const hora = hourDates[date] || '';  // Pega a hora inserida para a data
             const dataToSend = {
                 id: date,
                 data: date,
                 atiradores: atiradoresForDay,
                 ativo: activeDates[date], // Mantém o status ativo da data
+                hora: hora, // Inclui a hora
             };
 
             // Verifica se a data já existe no banco de dados
@@ -161,6 +175,7 @@ export function Faltas() {
                         data: date,
                         atiradores: Array.from(selectedAtiradores[date] || []).filter((id) => id !== atiradorId),
                         ativo: activeDates[date], // Mantém o status ativo da data
+                        hora: hourDates[date] || '', // Inclui a hora se existir
                     })
                         .then(() => {
                             console.log(`Atirador ${atiradorId} removido da data ${date} com sucesso`);
@@ -190,13 +205,22 @@ export function Faltas() {
                 <div className="flex flex-1 flex-col w-full mt-2 overflow-x-hidden overflow-y-scroll items-center pr-2">
                     <div className="flex justify-between w-full">
                         {weekDays.map((weekDay) => (
-                            <button
-                                key={weekDay.date}
-                                className={`px-4 py-2 rounded-lg ${activeDates[weekDay.date] ? 'bg-red-300' : 'bg-green-300'}`}
-                                onClick={() => handleDateStatusChange(weekDay.date)}
-                            >
-                                {activeDates[weekDay.date] ? 'Desativar' : 'Ativar'} {weekDay.day}
-                            </button>
+                            <div className="flex flex-col gap-1">
+                                <button
+                                    key={weekDay.date}
+                                    className={`text-xs px-4 py-2 rounded-lg ${activeDates[weekDay.date] ? 'bg-red-300' : 'bg-green-300'}`}
+                                    onClick={() => handleDateStatusChange(weekDay.date)}
+                                >
+                                    {activeDates[weekDay.date] ? 'Desativar' : 'Ativar'} {weekDay.day}
+                                </button>
+                                <input
+                                    type="text"
+                                    placeholder={`Hora ${formatDateForDisplay(weekDay.date)}`}
+                                    className="w-50 text-sm bg-white p-2 rounded-sm border-1 border-zinc-300 outline-none"
+                                    onChange={(e) => handleHourChange(weekDay.date, e.target.value)} // Atualiza a hora
+                                    value={hourDates[weekDay.date] || ''} // Mostra a hora atual se existir
+                                />
+                            </div>
                         ))}
                     </div>
 

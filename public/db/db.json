@@ -768,7 +768,8 @@
         "7f42",
         "1a3d"
       ],
-      "ativo": true
+      "ativo": true,
+      "hora": "Das 06:00 as 08:00"
     },
     {
       "id": "2025-04-12",
@@ -776,7 +777,8 @@
       "atiradores": [
         "9704"
       ],
-      "ativo": true
+      "ativo": true,
+      "hora": "Das 06:00 as 08:10"
     },
     {
       "id": "2025-04-08",
@@ -785,7 +787,8 @@
         "152f",
         "e32f"
       ],
-      "ativo": true
+      "ativo": true,
+      "hora": "Das 06:00 as 08:30"
     },
     {
       "id": "2025-04-10",
@@ -794,7 +797,8 @@
         "152f",
         "1a3d"
       ],
-      "ativo": true
+      "ativo": true,
+      "hora": "Das 06:00 as 08:30"
     },
     {
       "id": "2025-04-11",
@@ -804,7 +808,8 @@
         "7f42",
         "1a3d"
       ],
-      "ativo": true
+      "ativo": true,
+      "hora": "Das 06:00 as 08:20"
     },
     {
       "id": "2025-04-09",
@@ -812,7 +817,8 @@
       "atiradores": [
         "e32f"
       ],
-      "ativo": true
+      "ativo": true,
+      "hora": "Das 06:00 as 08:10"
     }
   ]
 }
