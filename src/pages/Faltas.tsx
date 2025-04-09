@@ -6,65 +6,12 @@ import { Eraser } from "lucide-react";
 
 export function Faltas() {
     const [atiradores, setAtiradores] = useState<any[]>([]);
-    const [faltas, setFaltas] = useState<{ [key: string]: string[] }>({});
-    const [selectedAtiradores, setSelectedAtiradores] = useState<{ [key: string]: Set<string> }>({});
+    const [_, setFaltas] = useState<{ [key: string]: any }>({});
+    const [selectedAtiradores, setSelectedAtiradores] = useState<{ [key: string]: Set<string> }>( {});
+    const [activeDates, setActiveDates] = useState<{ [key: string]: boolean }>({});
+    const [weekDays, setWeekDays] = useState<any[]>([]);
 
-    useEffect(() => {
-        axios.get('http://localhost:5000/atiradores')
-            .then((response) => {
-                setAtiradores(response.data);
-            })
-            .catch((error) => {
-                console.error('Erro ao carregar atiradores:', error);
-            });
-
-        axios.get('http://localhost:5000/faltas')
-            .then((response) => {
-                const faltasData: { [key: string]: string[] } = {};
-                const selectedAtiradoresData: { [key: string]: Set<string> } = {};
-
-                response.data.forEach((falta: any) => {
-                    const data = falta.data;
-                    const atiradores = falta.atiradores;
-
-                    faltasData[data] = atiradores;
-                    selectedAtiradoresData[data] = new Set(atiradores);
-                });
-
-                setFaltas(faltasData);
-                setSelectedAtiradores(selectedAtiradoresData);
-            })
-            .catch((error) => {
-                console.error('Erro ao carregar faltas:', error);
-            });
-    }, []);
-
-    const formatDateToISO = (dateStr: string) => {
-        if (!dateStr || typeof dateStr !== 'string') return '';
-        const parts = dateStr.includes('/') ? dateStr.split('/') : dateStr.split('-');
-
-        if (parts.length !== 3) return '';
-
-        const [a, b, c] = parts;
-
-        // Se for dd/mm/yyyy
-        if (dateStr.includes('/')) {
-            const day = a.padStart(2, '0');
-            const month = b.padStart(2, '0');
-            const year = c;
-            return `${year}-${month}-${day}`;
-        }
-
-        // Se for yyyy-mm-dd
-        const year = a;
-        const month = b.padStart(2, '0');
-        const day = c.padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
-
-
-
+    // Função para obter os dias da semana atual
     const getWeekDays = () => {
         const daysOfWeek = ['SEGUNDA FEIRA', 'TERÇA FEIRA', 'QUARTA FEIRA', 'QUINTA FEIRA', 'SEXTA FEIRA', 'SABADO'];
         const today = new Date();
@@ -88,108 +35,136 @@ export function Faltas() {
             weekDates.push({ day: daysOfWeek[i], date: isoDate });
         }
 
-        return weekDates;
+        setWeekDays(weekDates);
     };
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/atiradores')
+            .then((response) => {
+                setAtiradores(response.data);
+            })
+            .catch((error) => {
+                console.error('Erro ao carregar atiradores:', error);
+            });
+
+        axios.get('http://localhost:5000/faltas')
+            .then((response) => {
+                const faltasData: { [key: string]: any } = {};
+                const selectedAtiradoresData: { [key: string]: Set<string> } = {};
+                const activeDatesData: { [key: string]: boolean } = {};
+
+                response.data.forEach((falta: any) => {
+                    const data = falta.data;
+                    const atiradores = falta.atiradores;
+
+                    faltasData[data] = falta;
+                    selectedAtiradoresData[data] = new Set(atiradores);
+                    activeDatesData[data] = falta.ativo !== undefined ? falta.ativo : true; // Default ativo
+                });
+
+                setFaltas(faltasData);
+                setSelectedAtiradores(selectedAtiradoresData);
+                setActiveDates(activeDatesData);
+            })
+            .catch((error) => {
+                console.error('Erro ao carregar faltas:', error);
+            });
+
+        // Chama a função para gerar os dias da semana
+        getWeekDays();
+    }, []);
 
     const formatDateForDisplay = (isoDate: string) => {
         const [year, month, day] = isoDate.split("-");
         return `${day}/${month}/${year}`;
     };
 
-    const weekDays = getWeekDays();
+    const handleDateStatusChange = (date: string) => {
+        setActiveDates((prevState) => {
+            const newState = { ...prevState };
+            const newStatus = !newState[date]; // Alterna entre ativo e inativo
+            newState[date] = newStatus;
+
+            const dataToSend = {
+                id: date,
+                data: date,
+                atiradores: [], // Não importa os atiradores, eles serão manipulados separadamente
+                ativo: newStatus
+            };
+
+            // Atualiza no banco de dados
+            axios.put(`http://localhost:5000/faltas/${date}`, dataToSend)
+                .then(() => {
+                    console.log(`Data ${date} atualizada com sucesso para ${newStatus ? 'ativo' : 'inativo'}`);
+                })
+                .catch((error) => {
+                    console.error(`Erro ao atualizar data ${date}:`, error.response ? error.response.data : error.message);
+                });
+
+            return newState;
+        });
+    };
 
     const handleCheckboxChange = (date: string, atiradorId: string, checked: boolean) => {
-        setSelectedAtiradores((prevSelected) => {
-            const updatedSelected = { ...prevSelected };
-            if (!updatedSelected[date]) {
-                updatedSelected[date] = new Set();
-            }
+        if (activeDates[date]) { // Só permite mudar se a data estiver ativa
+            setSelectedAtiradores((prevSelected) => {
+                const updatedSelected = { ...prevSelected };
+                if (!updatedSelected[date]) {
+                    updatedSelected[date] = new Set();
+                }
 
-            if (checked) {
-                updatedSelected[date].add(atiradorId);
-            } else {
-                updatedSelected[date].delete(atiradorId);
-            }
+                if (checked) {
+                    updatedSelected[date].add(atiradorId);
+                } else {
+                    updatedSelected[date].delete(atiradorId);
+                }
 
-            return updatedSelected;
-        });
+                return updatedSelected;
+            });
+        }
     };
 
     const handleSubmit = () => {
-        weekDays.forEach((weekDay) => {
-            const date = weekDay.date;
-            const dateISO = formatDateToISO(date);
+        // Atualiza faltas no banco de dados
+        Object.keys(selectedAtiradores).forEach((date) => {
             const atiradoresForDay = Array.from(selectedAtiradores[date] || []);
-
             const dataToSend = {
-                id: dateISO, // <-- aqui está a mudança!
-                data: dateISO,
-                atiradores: atiradoresForDay
+                id: date,
+                data: date,
+                atiradores: atiradoresForDay,
+                ativo: activeDates[date] // Mantém o status ativo da data
             };
 
-            if (faltas[date]) {
-                axios.put(`http://localhost:5000/faltas/${dateISO}`, dataToSend)
-                    .then(() => {
-                        console.log(`Faltas para ${date} atualizadas com sucesso`);
-                    })
-                    .catch((error) => {
-                        console.error(`Erro ao atualizar faltas para ${date}:`, error.response ? error.response.data : error.message);
-                        if (error.response && error.response.status === 404) {
-                            axios.post('http://localhost:5000/faltas', dataToSend)
-                                .then(() => {
-                                    console.log(`Faltas para ${date} criadas com sucesso`);
-                                })
-                                .catch((createError) => {
-                                    console.error(`Erro ao criar faltas para ${date}:`, createError.response ? createError.response.data : createError.message);
-                                });
-                        }
-                    });
-            } else {
-                axios.post('http://localhost:5000/faltas', dataToSend)
-                    .then(() => {
-                        console.log(`Faltas para ${date} criadas com sucesso`);
-                    })
-                    .catch((error) => {
-                        console.error(`Erro ao criar faltas para ${date}:`, error.response ? error.response.data : error.message);
-                    });
-            }
+            axios.put(`http://localhost:5000/faltas/${date}`, dataToSend)
+                .then(() => {
+                    console.log(`Faltas para ${date} atualizadas com sucesso`);
+                })
+                .catch((error) => {
+                    console.error(`Erro ao atualizar faltas para ${date}:`, error.response ? error.response.data : error.message);
+                });
         });
     };
 
-
     const handleRemoveAtirador = (atiradorId: string) => {
-        const updatedSelected = { ...selectedAtiradores };
+        setAtiradores((prevAtiradores) =>
+            prevAtiradores.filter((atirador) => atirador.id !== atiradorId)
+        );
 
-        weekDays.forEach((weekDay) => {
-            const date = weekDay.date;
-            const dateISO = formatDateToISO(formatDateForDisplay(date));
-
-            if (updatedSelected[date]?.has(atiradorId)) {
-                updatedSelected[date].delete(atiradorId);
-                const updatedList = Array.from(updatedSelected[date]);
-
-                const dataToSend = {
-                    id: dateISO,
-                    data: dateISO,
-                    atiradores: updatedList
-                };
-
-
-                axios.put(`http://localhost:5000/faltas/${dateISO}`, dataToSend)
-                    .then(() => {
-                        console.log(`Atirador ${atiradorId} removido da data ${date}`);
-                        setSelectedAtiradores({ ...updatedSelected });
-
-                        setFaltas((prevFaltas) => ({
-                            ...prevFaltas,
-                            [date]: updatedList
-                        }));
-                    })
-                    .catch((error) => {
-                        console.error(`Erro ao remover atirador da data ${date}:`, error.response ? error.response.data : error.message);
-                    });
-            }
+        setSelectedAtiradores((prevSelected) => {
+            const updatedSelected = { ...prevSelected };
+            Object.keys(updatedSelected).forEach((date) => {
+                updatedSelected[date]?.delete(atiradorId);
+            });
+            return updatedSelected;
         });
+
+        axios.delete(`http://localhost:5000/atiradores/${atiradorId}`)
+            .then(() => {
+                console.log(`Atirador ${atiradorId} removido com sucesso`);
+            })
+            .catch((error) => {
+                console.error(`Erro ao remover atirador ${atiradorId}:`, error.response ? error.response.data : error.message);
+            });
     };
 
     return (
@@ -206,11 +181,23 @@ export function Faltas() {
                     <div className="w-[10%] h-0.5 rounded-lg bg-green-500" />
                 </div>
 
-                <div className="flex flex-1 flex-col w-full mt-2 overflow-x-hidden overflow-y-scroll items-center">
+                <div className="flex flex-1 flex-col w-full mt-2 overflow-x-hidden overflow-y-scroll items-center pr-2">
+                    <div className="flex justify-between w-full">
+                        {weekDays.map((weekDay) => (
+                            <button
+                                key={weekDay.date}
+                                className={`px-4 py-2 rounded-lg ${activeDates[weekDay.date] ? 'bg-red-300' : 'bg-green-300'}`}
+                                onClick={() => handleDateStatusChange(weekDay.date)}
+                            >
+                                {activeDates[weekDay.date] ? 'Desativar' : 'Ativar'} {weekDay.day}
+                            </button>
+                        ))}
+                    </div>
+
                     {atiradores
                         .sort((a, b) => parseInt(a.numero) - parseInt(b.numero))
                         .map((atirador) => (
-                            <div key={atirador.id} className="flex flex-1 gap-4 bg-white rounded-lg p-4 m-2 w-[99%] items-center">
+                            <div key={atirador.id} className="flex flex-1 gap-4 bg-white rounded-lg p-4 m-2 w-full items-center">
                                 <div className="flex flex-1 gap-4">
                                     <div className="flex justify-between items-center w-40">
                                         <h2 className="text-sm uppercase font-bold">{atirador.numero}</h2>
@@ -231,6 +218,7 @@ export function Faltas() {
                                                     onChange={(e) =>
                                                         handleCheckboxChange(weekDay.date, atirador.id, e.target.checked)
                                                     }
+                                                    disabled={!activeDates[weekDay.date]}
                                                 />
                                             </div>
                                         ))}
@@ -244,13 +232,14 @@ export function Faltas() {
                                 </button>
                             </div>
                         ))}
-                    <button
-                        className="bg-green-500 p-2 text-white rounded-lg hover:bg-green-600 transition-all w-[20%] cursor-pointer"
-                        onClick={handleSubmit}
-                    >
-                        Atualizar Faltas
-                    </button>
                 </div>
+
+                <button
+                    className="bg-green-500 p-2 text-white rounded-lg hover:bg-green-600 transition-all w-[20%] cursor-pointer"
+                    onClick={handleSubmit}
+                >
+                    Atualizar Faltas
+                </button>
             </div>
         </div>
     );

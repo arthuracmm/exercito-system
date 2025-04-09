@@ -763,39 +763,38 @@
     {
       "id": "2025-04-07",
       "data": "2025-04-07",
-      "atiradores": []
-    },
-    {
-      "id": "2025-04-09",
-      "data": "2025-04-09",
-      "atiradores": [
-        "e32f"
-      ]
-    },
-    {
-      "id": "2025-04-10",
-      "data": "2025-04-10",
-      "atiradores": []
+      "atiradores": [],
+      "ativo": true
     },
     {
       "id": "2025-04-08",
       "data": "2025-04-08",
-      "atiradores": []
+      "atiradores": [],
+      "ativo": true
+    },
+    {
+      "id": "2025-04-09",
+      "data": "2025-04-09",
+      "atiradores": [],
+      "ativo": true
+    },
+    {
+      "id": "2025-04-10",
+      "data": "2025-04-10",
+      "atiradores": [],
+      "ativo": true
     },
     {
       "id": "2025-04-11",
       "data": "2025-04-11",
-      "atiradores": [
-        "7f42",
-        "e32f"
-      ]
+      "atiradores": [],
+      "ativo": true
     },
     {
       "id": "2025-04-12",
       "data": "2025-04-12",
-      "atiradores": [
-        "e32f"
-      ]
+      "atiradores": [],
+      "ativo": true
     }
   ]
 }
