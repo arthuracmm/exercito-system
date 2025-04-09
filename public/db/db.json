@@ -763,37 +763,55 @@
     {
       "id": "2025-04-07",
       "data": "2025-04-07",
-      "atiradores": [],
-      "ativo": true
-    },
-    {
-      "id": "2025-04-08",
-      "data": "2025-04-08",
-      "atiradores": [],
-      "ativo": true
-    },
-    {
-      "id": "2025-04-09",
-      "data": "2025-04-09",
-      "atiradores": [],
-      "ativo": true
-    },
-    {
-      "id": "2025-04-10",
-      "data": "2025-04-10",
-      "atiradores": [],
-      "ativo": true
-    },
-    {
-      "id": "2025-04-11",
-      "data": "2025-04-11",
-      "atiradores": [],
+      "atiradores": [
+        "9704",
+        "7f42",
+        "1a3d"
+      ],
       "ativo": true
     },
     {
       "id": "2025-04-12",
       "data": "2025-04-12",
-      "atiradores": [],
+      "atiradores": [
+        "9704"
+      ],
+      "ativo": true
+    },
+    {
+      "id": "2025-04-08",
+      "data": "2025-04-08",
+      "atiradores": [
+        "152f",
+        "e32f"
+      ],
+      "ativo": true
+    },
+    {
+      "id": "2025-04-10",
+      "data": "2025-04-10",
+      "atiradores": [
+        "152f",
+        "1a3d"
+      ],
+      "ativo": true
+    },
+    {
+      "id": "2025-04-11",
+      "data": "2025-04-11",
+      "atiradores": [
+        "9704",
+        "7f42",
+        "1a3d"
+      ],
+      "ativo": true
+    },
+    {
+      "id": "2025-04-09",
+      "data": "2025-04-09",
+      "atiradores": [
+        "e32f"
+      ],
       "ativo": true
     }
   ]

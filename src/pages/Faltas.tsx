@@ -7,7 +7,7 @@ import { Eraser } from "lucide-react";
 export function Faltas() {
     const [atiradores, setAtiradores] = useState<any[]>([]);
     const [_, setFaltas] = useState<{ [key: string]: any }>({});
-    const [selectedAtiradores, setSelectedAtiradores] = useState<{ [key: string]: Set<string> }>( {});
+    const [selectedAtiradores, setSelectedAtiradores] = useState<{ [key: string]: Set<string> }>({});
     const [activeDates, setActiveDates] = useState<{ [key: string]: boolean }>({});
     const [weekDays, setWeekDays] = useState<any[]>([]);
 
@@ -84,87 +84,93 @@ export function Faltas() {
             const newState = { ...prevState };
             const newStatus = !newState[date]; // Alterna entre ativo e inativo
             newState[date] = newStatus;
-
-            const dataToSend = {
-                id: date,
-                data: date,
-                atiradores: [], // Não importa os atiradores, eles serão manipulados separadamente
-                ativo: newStatus
-            };
-
-            // Atualiza no banco de dados
-            axios.put(`http://localhost:5000/faltas/${date}`, dataToSend)
-                .then(() => {
-                    console.log(`Data ${date} atualizada com sucesso para ${newStatus ? 'ativo' : 'inativo'}`);
-                })
-                .catch((error) => {
-                    console.error(`Erro ao atualizar data ${date}:`, error.response ? error.response.data : error.message);
-                });
-
             return newState;
         });
     };
 
     const handleCheckboxChange = (date: string, atiradorId: string, checked: boolean) => {
-        if (activeDates[date]) { // Só permite mudar se a data estiver ativa
-            setSelectedAtiradores((prevSelected) => {
-                const updatedSelected = { ...prevSelected };
-                if (!updatedSelected[date]) {
-                    updatedSelected[date] = new Set();
-                }
+        setSelectedAtiradores((prevSelected) => {
+            const updatedSelected = { ...prevSelected };
+            if (!updatedSelected[date]) {
+                updatedSelected[date] = new Set();
+            }
 
-                if (checked) {
-                    updatedSelected[date].add(atiradorId);
-                } else {
-                    updatedSelected[date].delete(atiradorId);
-                }
+            if (checked) {
+                updatedSelected[date].add(atiradorId);
+            } else {
+                updatedSelected[date].delete(atiradorId);
+            }
 
-                return updatedSelected;
-            });
-        }
+            return updatedSelected;
+        });
     };
 
     const handleSubmit = () => {
-        // Atualiza faltas no banco de dados
-        Object.keys(selectedAtiradores).forEach((date) => {
+        // Envia as alterações ao banco de dados apenas quando o botão for clicado
+        Object.keys(activeDates).forEach((date) => {
             const atiradoresForDay = Array.from(selectedAtiradores[date] || []);
             const dataToSend = {
                 id: date,
                 data: date,
                 atiradores: atiradoresForDay,
-                ativo: activeDates[date] // Mantém o status ativo da data
+                ativo: activeDates[date], // Mantém o status ativo da data
             };
 
-            axios.put(`http://localhost:5000/faltas/${date}`, dataToSend)
+            // Verifica se a data já existe no banco de dados
+            axios.get(`http://localhost:5000/faltas/${date}`)
                 .then(() => {
-                    console.log(`Faltas para ${date} atualizadas com sucesso`);
+                    // Se a data existir, realiza a atualização com PUT
+                    axios.put(`http://localhost:5000/faltas/${date}`, dataToSend)
+                        .then(() => {
+                            console.log(`Faltas para ${date} atualizadas com sucesso`);
+                        })
+                        .catch((error) => {
+                            console.error(`Erro ao atualizar faltas para ${date}:`, error.response ? error.response.data : error.message);
+                        });
                 })
                 .catch((error) => {
-                    console.error(`Erro ao atualizar faltas para ${date}:`, error.response ? error.response.data : error.message);
+                    if (error.response && error.response.status === 404) {
+                        // Se a data não existir, cria uma nova entrada no banco com POST
+                        axios.post('http://localhost:5000/faltas', dataToSend)
+                            .then(() => {
+                                console.log(`Faltas para ${date} criadas com sucesso`);
+                            })
+                            .catch((createError) => {
+                                console.error(`Erro ao criar faltas para ${date}:`, createError.response ? createError.response.data : createError.message);
+                            });
+                    } else {
+                        console.error(`Erro ao verificar a existência da data ${date}:`, error.response ? error.response.data : error.message);
+                    }
                 });
         });
     };
 
     const handleRemoveAtirador = (atiradorId: string) => {
-        setAtiradores((prevAtiradores) =>
-            prevAtiradores.filter((atirador) => atirador.id !== atiradorId)
-        );
+        if (window.confirm('Tem certeza que deseja limpar a semana de faltas desse atirador?')) {
+            Object.keys(selectedAtiradores).forEach((date) => {
+                if (selectedAtiradores[date]?.has(atiradorId)) {
+                    setSelectedAtiradores((prevSelected) => {
+                        const updatedSelected = { ...prevSelected };
+                        updatedSelected[date]?.delete(atiradorId);
+                        return updatedSelected;
+                    });
 
-        setSelectedAtiradores((prevSelected) => {
-            const updatedSelected = { ...prevSelected };
-            Object.keys(updatedSelected).forEach((date) => {
-                updatedSelected[date]?.delete(atiradorId);
+                    // Atualiza o banco de dados para remover o atirador da data específica
+                    axios.put(`http://localhost:5000/faltas/${date}`, {
+                        id: date,
+                        data: date,
+                        atiradores: Array.from(selectedAtiradores[date] || []).filter((id) => id !== atiradorId),
+                        ativo: activeDates[date], // Mantém o status ativo da data
+                    })
+                        .then(() => {
+                            console.log(`Atirador ${atiradorId} removido da data ${date} com sucesso`);
+                        })
+                        .catch((error) => {
+                            console.error(`Erro ao remover atirador ${atiradorId} da data ${date}:`, error.response ? error.response.data : error.message);
+                        });
+                }
             });
-            return updatedSelected;
-        });
-
-        axios.delete(`http://localhost:5000/atiradores/${atiradorId}`)
-            .then(() => {
-                console.log(`Atirador ${atiradorId} removido com sucesso`);
-            })
-            .catch((error) => {
-                console.error(`Erro ao remover atirador ${atiradorId}:`, error.response ? error.response.data : error.message);
-            });
+        }
     };
 
     return (
