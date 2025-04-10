@@ -200,7 +200,7 @@ export function Declaracao() {
                                 textoDeclaracao = `Declaro para os devidos fins, que o <strong>Atirador ${atirador?.nomeatr.toUpperCase()}</strong> esteve <strong>voluntariamente</strong> em cumprimento de missões neste TIRO DE GUERRA 02-013 (FRANCA-SP), sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP <strong>${dataPersonalizada}</strong>.`;
                                 break;
                             default:
-                                textoDeclaracao = `Declaro que o Atirador <strong>${atirador?.nomeatr.toUpperCase()}</strong> esteve em missão de guarda no TG 02-013 <strong>${dataPersonalizada}</strong>.`;
+                                textoDeclaracao = `Declaro para os devidos fins, que o <strong>Atirador ${atirador?.nomeatr.toUpperCase()}</strong> , esteve em cumprimento de missões militares (MISSÃO DE GUARDA DO AQUARTELAMENTO) pelo TG 02-013 das <strong>${dataPersonalizada}</strong> do corrente ano, amparado pelo Art. 143 da Constituição Federal e o constante na Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar).`;
                         }
 
                         return (

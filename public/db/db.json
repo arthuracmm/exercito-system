@@ -764,8 +764,7 @@
       "id": "2025-04-07",
       "data": "2025-04-07",
       "atiradores": [
-        "9704",
-        "152f"
+        "9704"
       ],
       "ativo": true,
       "hora": ""
@@ -773,9 +772,7 @@
     {
       "id": "2025-04-08",
       "data": "2025-04-08",
-      "atiradores": [
-        "7f42"
-      ],
+      "atiradores": [],
       "ativo": true,
       "hora": "Das 06:00 as 08:30"
     },
@@ -796,9 +793,7 @@
     {
       "id": "2025-04-11",
       "data": "2025-04-11",
-      "atiradores": [
-        "e32f"
-      ],
+      "atiradores": [],
       "ativo": true,
       "hora": "Das 06:00 as 08:30"
     },
@@ -806,7 +801,6 @@
       "id": "2025-04-12",
       "data": "2025-04-12",
       "atiradores": [
-        "e32f",
         "9704"
       ],
       "ativo": true,
