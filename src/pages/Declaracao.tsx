@@ -8,24 +8,9 @@ export function Declaracao() {
     const [faltas, setFaltas] = useState<any[]>([]);
     const [semanaSelecionada, setSemanaSelecionada] = useState<string>('current');
     const [diasDaSemana, setDiasDaSemana] = useState<any[]>([]);
+    const [tipoDeclaracao, setTipoDeclaracao] = useState<string>('declaracaoSemanalAtirador');
+    const [dataPersonalizada, setDataPersonalizada] = useState<string>('');
 
-    const declaracaoSemanalAtirador: string = "Declaramos para os devidos fins que o <strong>Atirador {atirador?.nomeatr.toUpperCase()}</strong> esteve em cumprimento de missões militares (INSTRUÇÃO SEMANAL) no TIRO DE GUERRA 02-013 (FRANCA-SP), sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP, <strong>{texto}</strong>, conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei N° 4.375, de 17 AGO 64 (Lei do Serviço Militar).";
-    
-    const declaracaoSemanalMonitor: string = "Declaro para os devidos fins, que o <strong>Monitor {atirador?.nomeatr.toUpperCase()},</strong> esteve em cumprimento de missões militares (INSTRUÇÃO SEMANAL) no TIRO DE GUERRA 02-013 (FRANCA-SP), sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP, <strong>{texto}</strong>, conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar).";
-
-    const declaracaoFaculdadeEmpresa: string = "Declaro para os devidos fins, que o Atirador <strong>Atirador {atirador?.nomeatr.toUpperCase()},</strong>, está matriculado no TIRO DE GUERRA 02-013 (FRANCA), e prestará o Serviço Militar Inicial Obrigatório, {dataPersonalizada}.";
-
-    const declaracaoMissaoEscala: string = "Declaro para os devidos fins, que o Atirador <strong>{atirador?.nomeatr.toUpperCase()}</strong>, esteve em cumprimento de missões militares no TIRO DE GUERRA 02-013 (FRANCA-SP), sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP, <strong>{dataPersonalizada}</strong> conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar).";
-
-    const declaracaoMissaoExternaEscala: string = "Declaro para os devidos fins, que o Atirador <strong>{atirador?.nomeatr.toUpperCase()}</strong>, esteve em cumprimento de missões militares no(a) , <strong>{dataPersonalizada}</strong> conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar)."
-
-    const declaracaoMissaoExternaVoluntario: string = "Declaro para os devidos fins, que o Atirador <strong>{atirador?.nomeatr.toUpperCase()}</strong>, esteve voluntariamente em cumprimento de missões militares no(a) , <strong>{dataPersonalizada}</strong> conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar)."
-
-    const declaracaoMissaoVoluntaria: string = "Declaro para os devidos fins, que o Atirador <strong>{atirador?.nomeatr.toUpperCase()}</strong>, esteve voluntariamente em cumprimento de missões neste TIRO DE GUERRA 02-013 (FRANCA-SP), sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP <strong>{dataPersonalizada}</strong>."
-
-    const declaracaoServico: string = "Declaro para os devidos fins, que o Atirador <strong>{atirador?.nomeatr.toUpperCase()}</strong>, esteve em cumprimento de missões militares (MISSÃO DE GUARDA DO AQUARTELAMENTO) pelo TG 02-013 <strong>{dataPersonalizada}</strong>. do corrente ano, amparado pelo Art. 143 da Constituição Federal e o constante na Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar)"
-
-    // Carregar a lib html2pdf dinamicamente
     useEffect(() => {
         const script = document.createElement('script');
         script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
@@ -92,7 +77,7 @@ export function Declaracao() {
         const elemento = document.getElementById("pdf-content");
         if (!elemento) return;
 
-        elemento.style.display = "block"; // Mostra antes de gerar
+        elemento.style.display = "block";
 
         const options = {
             margin: 0,
@@ -105,7 +90,7 @@ export function Declaracao() {
         // @ts-ignore
         html2pdf().set(options).from(elemento).outputPdf('bloburl').then((pdfUrl: string) => {
             window.open(pdfUrl, '_blank');
-            elemento.style.display = "none"; // Esconde de novo
+            elemento.style.display = "none";
         });
     };
 
@@ -132,11 +117,40 @@ export function Declaracao() {
                     </button>
                 </div>
 
-                <div className="flex flex-col gap-2 h-[70%] overflow-y-scroll mt-4">
+                <div className="flex gap-4">
+                    <label className="flex flex-col w-full">
+                        Selecione o tipo de declaração:
+                        <select
+                            className="w-full p-2 rounded-lg bg-white px-4 h-10"
+                            defaultValue="declaracaoSemanalAtirador"
+                            onChange={(e) => setTipoDeclaracao(e.target.value)}
+                        >
+                            <option value="declaracaoSemanalAtirador">Semanal Atirador</option>
+                            <option value="declaracaoSemanalMonitor">Semanal Monitor</option>
+                            <option value="declaracaoFaculdadeEmpresa">Faculdade/Empresa</option>
+                            <option value="declaracaoMissaoEscala">Missão Escala</option>
+                            <option value="declaracaoMissaoExternaEscala">Missão Externa Escala</option>
+                            <option value="declaracaoMissaoExternaVoluntario">Missão E. E. Voluntario</option>
+                            <option value="declaracaoMissaoVoluntaria">Missão Voluntária</option>
+                            <option value="declaracaoServico">Serviço</option>
+                        </select>
+                    </label>
+                    <label className="flex flex-col w-full">
+                        Digite a data personalizada:
+                    <input type="text"
+                    className="w-full p-2 rounded-lg bg-white px-4 h-10 outline-none"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDataPersonalizada(e.target.value)}
+                    placeholder="Digite a Data Personalizada"
+                    value={dataPersonalizada}
+                    />
+                    </label>
+                </div>
+
+                <div className="flex flex-col gap-2 h-full overflow-y-scroll mt-4">
                     {atiradores
                         .sort((a, b) => a.numero - b.numero)
                         .map((atirador) => (
-                            <div key={atirador.id} className="flex gap-4 bg-white rounded-lg p-4 justify-between items-center">
+                            <div key={atirador.id} className="flex gap-4 bg-white rounded-lg p-4 justify-between items-center w-[99.5%]">
                                 <label className="flex gap-4">
                                     <input
                                         type="checkbox"
@@ -155,18 +169,39 @@ export function Declaracao() {
                     Gerar PDFs
                 </button>
 
-                {/* PDF invisível para renderização */}
+                {/* PDF invisível */}
                 <div id="pdf-content" style={{ display: "none", fontFamily: "serif" }}>
                     {selectedAtiradores.map((id) => {
                         const atirador = atiradores.find((a) => a.id === id);
                         const texto = gerarTextoPresencas(id);
 
-                        const htmlDeclaracao = `
-      Declaramos para os devidos fins que o(a) atirador(a) 
-      <strong>${atirador?.nomeatr.toUpperCase()}</strong> esteve em cumprimento de missões militares (INSTRUÇÃO SEMANAL) no TIRO DE GUERRA 02-013 (FRANCA-SP), 
-      sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP, 
-      <strong>${texto}</strong>, conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei N° 4.375, de 17 AGO 64 (Lei do Serviço Militar).
-    `;
+                        let textoDeclaracao = '';
+
+                        switch (tipoDeclaracao) {
+                            case 'declaracaoSemanalAtirador':
+                                textoDeclaracao = `Declaro para os devidos fins, que o <strong>Atirador ${atirador?.nomeatr.toUpperCase()}</strong> 02-013 (FRANCA-SP), sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP, <strong>${texto}</strong>, conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar).`;
+                                break;
+                            case 'declaracaoSemanalMonitor':
+                                textoDeclaracao = `Declaro para os devidos fins, que o <strong>Monitor ${atirador?.nomeatr.toUpperCase()}</strong> esteve em cumprimento de missões militares... <strong>${texto}</strong>,conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar).`;
+                                break;
+                            case 'declaracaoFaculdadeEmpresa':
+                                textoDeclaracao = `Declaro para os devidos fins, que o <strong> Atirador ${atirador?.nomeatr.toUpperCase()}</strong> , está matriculado no TIRO DE GUERRA 02-013 (FRANCA), e prestará o Serviço Militar Inicial Obrigatório, no período ${dataPersonalizada}.`;
+                                break;
+                            case 'declaracaoMissaoEscala':
+                                textoDeclaracao = `Declaro para os devidos fins, que o <strong>Atirador ${atirador?.nomeatr.toUpperCase()}</strong> esteve em cumprimento de missões militares <strong>${dataPersonalizada}</strong>.`;
+                                break;
+                            case 'declaracaoMissaoExternaEscala':
+                                textoDeclaracao = `Declaro para os devidos fins, que o <strong> Atirador ${atirador?.nomeatr.toUpperCase()}</strong> , esteve em cumprimento de missões militares no TIRO DE GUERRA 02-013 (FRANCA-SP), sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP, <strong>${dataPersonalizada}</strong>, conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar).`;
+                                break;
+                            case 'declaracaoMissaoExternaVoluntario':
+                                textoDeclaracao = `Declaro para os devidos fins, que o <strong>Atirador ${atirador?.nomeatr.toUpperCase()}</strong> esteve <strong>voluntariamente</strong> em cumprimento de missões militares no(a) <strong>${dataPersonalizada}</strong>, conforme amparo na Constituição da República Federativa do Brasil de 1988 e Lei nº 4.375, de 17 AGO 64 (Lei do Serviço Militar).`;
+                                break;
+                            case 'declaracaoMissaoVoluntaria':
+                                textoDeclaracao = `Declaro para os devidos fins, que o <strong>Atirador ${atirador?.nomeatr.toUpperCase()}</strong> esteve <strong>voluntariamente</strong> em cumprimento de missões neste TIRO DE GUERRA 02-013 (FRANCA-SP), sito à Av. Distrito Federal, 1010 - Vila Aparecida - CEP: 14.401-342, nesta cidade de Franca-SP <strong>${dataPersonalizada}</strong>.`;
+                                break;
+                            default:
+                                textoDeclaracao = `Declaro que o Atirador <strong>${atirador?.nomeatr.toUpperCase()}</strong> esteve em missão de guarda no TG 02-013 <strong>${dataPersonalizada}</strong>.`;
+                        }
 
                         return (
                             <div
@@ -222,17 +257,7 @@ export function Declaracao() {
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
                                     <h1 style={{ fontSize: '40px', marginTop: '40px', textAlign: 'center', fontWeight: 'bold' }}>DECLARAÇÃO</h1>
 
-                                    <p
-                                        style={{
-                                            fontSize: '15px',
-                                            marginTop: '80px',
-                                            lineHeight: '1.6',
-                                            textAlign: 'justify',
-                                            textIndent: '30px',
-                                            zIndex: 1
-                                        }}
-                                        dangerouslySetInnerHTML={{ __html: htmlDeclaracao }}
-                                    />
+                                    <p style={{ marginTop: 40, fontSize: 16, textAlign: 'justify', textIndent: 30 }} dangerouslySetInnerHTML={{ __html: textoDeclaracao }} />
 
                                     <p style={{
                                         fontSize: '15px',
@@ -244,6 +269,18 @@ export function Declaracao() {
                                         zIndex: 1
                                     }}>
                                         Esta declaração só terá validade sendo ORIGINAL com MARCA D'ÁGUA e assinada apenas pelo <strong>Subtenente AISLAN ALVES MOREIRA</strong>. As declarações diferentes deste modelo não terão validade, incluindo a reprodução de CÓPIAS.
+                                    </p>
+
+                                    <p style={{
+                                        fontSize: '15px',
+                                        marginTop: '40px',
+                                        fontWeight: 'bold',
+                                        lineHeight: '1.5',
+                                        textAlign: 'justify',
+                                        textIndent: '30px',
+                                        zIndex: 1
+                                    }}>
+                                        Franca-SP, {new Date().toLocaleDateString('pt-BR', { month: 'long', day: '2-digit',year: 'numeric'})}
                                     </p>
 
                                     <div style={{
@@ -288,8 +325,6 @@ export function Declaracao() {
                         );
                     })}
                 </div>
-
-
             </div>
         </div>
     );
